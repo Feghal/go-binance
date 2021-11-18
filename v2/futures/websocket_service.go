@@ -547,7 +547,7 @@ func WsDiffDepthServe(symbol string, handler WsDepthHandler, errHandler ErrHandl
 func WsCombinedDepthServe(symbolLevels map[string]string, handler WsDepthHandler, errHandler ErrHandler) (doneC, stopC chan struct{}, err error) {
 	endpoint := getCombinedEndpoint()
 	for s, l := range symbolLevels {
-		endpoint += fmt.Sprintf("%s@depth%s", strings.ToLower(s), l) + "/"
+		endpoint += fmt.Sprintf("%s@depth%s@100", strings.ToLower(s), l) + "/"
 	}
 	endpoint = endpoint[:len(endpoint)-1]
 	cfg := newWsConfig(endpoint)
