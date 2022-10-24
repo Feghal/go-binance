@@ -25,7 +25,10 @@ func newWsConfig(endpoint string) *WsConfig {
 
 var wsServe = func(cfg *WsConfig, handler WsHandler, errHandler ErrHandler) (doneC, stopC chan struct{}, err error) {
 	ctx, cancel := context.WithCancel(context.Background())
-	c, _, err := websocket.Dial(ctx, cfg.Endpoint, nil)
+	opts := &websocket.DialOptions{
+		CompressionMode: websocket.CompressionDisabled,
+	}
+	c, _, err := websocket.Dial(ctx, cfg.Endpoint, opts)
 	if err != nil {
 		cancel()
 		return nil, nil, err
